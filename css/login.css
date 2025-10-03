@@ -1,0 +1,116 @@
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0f7fa 0%, #fce4ec 100%);
+  font-family: "Segoe UI", Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contenedor-formularios {
+  background: rgba(255, 255, 255, 0.95);
+  max-width: 370px;
+  width: 100%;
+  margin: 40px auto;
+  padding: 36px 32px 28px 32px;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(44, 62, 80, 0.13);
+  text-align: center;
+}
+.titulo {
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+.subtitulo {
+  color: #888;
+  margin-bottom: 28px;
+  font-size: 1.05rem;
+}
+.input-group {
+  position: relative;
+  margin-bottom: 22px;
+}
+.input-group i.fa-user,
+.input-group i.fa-lock {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #b0b0b0;
+  font-size: 1.1rem;
+}
+.input-group i.fa-eye,
+.input-group i.fa-eye-slash {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  color: #b0b0b0;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.input-group input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 38px 12px 40px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  background: #f8fafc;
+  transition: border 0.2s;
+}
+.input-group input:focus {
+  border-color: #80cbc4;
+  background: #fff;
+}
+button[type="submit"] {
+  width: 100%;
+  padding: 12px 0;
+  background: #80cbc4;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 10px;
+  box-shadow: 0 2px 8px rgba(128, 203, 196, 0.08);
+}
+button[type="submit"]:hover {
+  background: #26a69a;
+}
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 22px;
+}
+.acciones .forgot {
+  color: #888;
+  text-decoration: none;
+  font-size: 0.98rem;
+  transition: color 0.2s;
+}
+.acciones .forgot:hover {
+  color: #26a69a;
+  text-decoration: underline;
+}
+.acciones .signup {
+  background: #b2ebf2;
+  color: #333;
+  padding: 8px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 8px rgba(178, 235, 242, 0.08);
+}
+.acciones .signup:hover {
+  background: #26a69a;
+  color: #fff;
+}
