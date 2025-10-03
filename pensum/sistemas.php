@@ -1,7 +1,6 @@
 <?php
 include '../conexion_db/conexionOracle.php';
 
-// Traer cursos por semestre
 $sql = "SELECT SEMESTRE, COD_CURSO, NOMBRE, CREDITOS
         FROM CURSOS
         WHERE ID_FACULTAD = 1
