@@ -7,26 +7,24 @@ use PHPMailer\PHPMailer\Exception;
 $mail = new PHPMailer(true);
 
 try {
-    // ===== Configuración SMTP =====
+
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'JrCayetano77@gmail.com'; // Tu Gmail completo
-    $mail->Password   = 'wyzuvfgkddtyflmb';       // App Password de 16 caracteres, sin espacios
+    $mail->Username   = 'JrCayetano77@gmail.com'; 
+    $mail->Password   = 'wyzuvfgkddtyflmb';       
     $mail->SMTPSecure = 'tls';
     $mail->Port       = 587;
 
-    // ===== Remitente y destinatario =====
-    $mail->setFrom('JrCayetano77@gmail.com', 'Jr Cayetano'); // Debe ser tu correo Gmail
-    $mail->addAddress('JrCayetano77@gmail.com', 'Jr Cayetano');
 
-    // ===== Contenido =====
+    $mail->setFrom('JrCayetano77@gmail.com', 'Jr Cayetano'); 
+    $mail->addAddress('JrCayetano77@gmail.com', 'Jr Cayetano');
     $mail->isHTML(true);
     $mail->Subject = 'Correo de prueba PHPMailer';
     $mail->Body    = '<h2>¡Hola!</h2><p>Este es un correo de prueba usando PHPMailer en Laragon.</p>';
     $mail->AltBody = '¡Hola! Este es un correo de prueba en texto plano.';
 
-    // ===== Depuración =====
+
     $mail->SMTPDebug = 2;
     $mail->Debugoutput = 'html';
 

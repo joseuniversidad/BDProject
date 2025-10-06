@@ -22,8 +22,9 @@ oci_free_statement($stid);
 <head>
     <meta charset="UTF-8">
     <title>Cursos por Semestre</title>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../css/panel.css">
     <link rel="stylesheet" href="../css/sistemas.css">
 </head>
@@ -62,10 +63,11 @@ oci_free_statement($stid);
             <?php endforeach; ?>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/botonlogoutconfirm.js"></script>
 
 </body>
- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../js/sidebar.js"></script>
-<script src="../js/botonlogoutconfirm.js"></script>
+
 
 </html>

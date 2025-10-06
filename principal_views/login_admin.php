@@ -4,9 +4,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Inicio de Sesión</title>
+    <title>Login Administrador</title>
     <link rel="stylesheet" href="../css/login.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 </head>
@@ -20,7 +21,6 @@
 
     .subtitulo {
         text-align: center;
-        /* centra el texto debajo del logo */
         font-family: 'Arial', sans-serif;
         font-size: 20px;
         color: #333;
@@ -30,25 +30,19 @@
 
 <body>
     <div class="contenedor-formularios">
-        <h2>Inicio de Sesión</h2>
-        <h2 class="subtitulo">Bienvenidos a nuestra universidad</h2>
+        <h2>Acceso Administrador</h2>
         <img src="../Imagenes/logo.png" alt="Logo" class="logo">
-        <form id="formLogin" action="../modules/procesar_login.php" method="POST">
+        <form id="formLogin" action="../modules/procesar_login_admin.php" method="POST">
             <div class="input-group">
                 <i class="fa-solid fa-user"></i>
-                <input type="text" name="carnet" placeholder="Carnet" required pattern="\d+" title="Solo números" required autocomplete="new-email">
+                <input type="text" name="carnet" placeholder="Carnet" required pattern="\d+" autocomplete="new-carnet">
             </div>
             <div class="input-group">
                 <i class="fa-solid fa-lock"></i>
                 <input type="password" name="password" placeholder="Contraseña" required autocomplete="new-password">
-                <i class="fa-solid fa-eye" id="togglePassword" style="right: 14px; left: auto; cursor:pointer;"></i>
             </div>
-            <button type="submit" name="login">Ingresar</button>
+            <button type="submit" name="login_admin">Ingresar</button>
         </form>
-        <div class="acciones">
-            <a href="#" class="forgot">Recuperar Contraseña</a>
-            <a href="registro_estudiante.php" class="signup">Registrarse <i class="fa-solid fa-user-plus"></i></a>
-        </div>
     </div>
 </body>
 <script>

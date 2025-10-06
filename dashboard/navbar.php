@@ -6,10 +6,11 @@ if (session_status() === PHP_SESSION_NONE) {
 $facultad_usuario = $_SESSION['facultad'] ?? '';
 
 $pensums = [
-    "Ingenieria en Sistemas" => "../pensum/Sistemas.php",
-    "Odontologia"            => "../pensum/Odontologia.php",
-    "Medicina"               => "../pensum/Medicina.php",
-    "Derecho"                => "../pensum/Derecho.php",
+    "Ingenieria en Sistemas" => "../pensum/sistemas.php",
+    "Ingenieria Industrial" => "../pensum/industrial.php",
+    "Ingenieria Quimica" => "../pensum/quimica.php",
+    "Licenciatura en Administracion"=> "../pensum/administracion.php",
+    "Licenciatura en Trabajo Social"=> "../pensum/social.php",
 ];
 
 
@@ -39,6 +40,7 @@ $url_pensum = $pensums[$facultad_usuario] ?? "../pensum/general.php";
 </style>
 
 <body>
+    <script src="../js/sidebar.js"></script>
     <nav class="sidebar" id="sidebar" aria-label="Menú principal">
         <div class="profile">
             <a href="../principal_views/panel.php">
@@ -52,7 +54,7 @@ $url_pensum = $pensums[$facultad_usuario] ?? "../pensum/general.php";
         <a href="#"><span class="icon">🏠</span><span class="label">Tablero</span></a>
         <a href="#"><span class="icon">📚</span><span class="label">Cursos</span></a>
         <a href="#"><span class="icon">📝</span><span class="label">Tareas</span></a>
-
+        <a href="#"><span class="icon">📋</span><span class="label">Asignación</span></a>
         <a href="<?php echo $url_pensum; ?>">
             <span class="icon">📖</span><span class="label">Pensum</span>
         </a>
@@ -62,7 +64,7 @@ $url_pensum = $pensums[$facultad_usuario] ?? "../pensum/general.php";
         <button id="toggleBtn" class="toggle-btn" aria-label="Colapsar sidebar">⮜</button>
     </nav>
 
-    <script src="../js/sidebar.js"></script>
+    
     <script src="../js/botonlogoutconfirm.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>

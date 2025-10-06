@@ -29,6 +29,7 @@ $foto      = $_SESSION['foto'] ?? '../imagenes/logo.png';
     <div class="content">
         <div class="profile-card">
             <img src="<?php echo htmlspecialchars($foto); ?>" class="avatar" alt="Avatar">
+            <h1>Bienvenido</h1>
             <h2><?php echo htmlspecialchars($nombre . ' ' . $apellidos); ?></h2>
             <p class="facultad">Facultad: <?php echo htmlspecialchars($facultad); ?></p>
 
