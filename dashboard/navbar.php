@@ -53,7 +53,7 @@ $url_pensum = $pensums[$facultad_usuario] ?? "../pensum/general.php";
 
         <a href="#"><span class="icon">🏠</span><span class="label">Tablero</span></a>
         <a href="#"><span class="icon">📚</span><span class="label">Cursos</span></a>
-        <a href="#"><span class="icon">📝</span><span class="label">Tareas</span></a>
+        <a href="../estudiante/tareas.php"><span class="icon">📝</span><span class="label">Tareas</span></a>
         <a href="#"><span class="icon">📋</span><span class="label">Asignación</span></a>
         <a href="<?php echo $url_pensum; ?>">
             <span class="icon">📖</span><span class="label">Pensum</span>

@@ -17,11 +17,11 @@ require '../vendor/autoload.php';
 
     <?php
     if (isset($_POST['login'])) {
-       
+
         $carnet = trim($_POST['carnet']);
         $password = trim($_POST['password']);
 
-        
+
         if (!ctype_digit($carnet)) {
             echo "<script>
             Swal.fire({
@@ -37,16 +37,18 @@ require '../vendor/autoload.php';
 
         $carnet = intval($carnet);
 
-        
+
         $sql = "SELECT 
-                E.CARNET, 
-                E.PASSWORD, 
-                E.NOMBRE AS NOMBRE_ESTUDIANTE, 
-                E.APELLIDOS AS APELLIDOS_ESTUDIANTE, 
-                F.NOMBRE AS FACULTAD_NOMBRE
-            FROM ESTUDIANTES E
-            LEFT JOIN FACULTADES F ON E.FACULTAD = F.ID_FACULTAD
-            WHERE E.CARNET = :carnet";
+        E.ID_ESTUDIANTE,
+        E.CARNET, 
+        E.PASSWORD, 
+        E.NOMBRE AS NOMBRE_ESTUDIANTE, 
+        E.APELLIDOS AS APELLIDOS_ESTUDIANTE, 
+        F.NOMBRE AS FACULTAD_NOMBRE
+    FROM ESTUDIANTES E
+    LEFT JOIN FACULTADES F ON E.FACULTAD = F.ID_FACULTAD
+    WHERE E.CARNET = :carnet";
+
 
         $stmt = oci_parse($conn, $sql);
         oci_bind_by_name($stmt, ":carnet", $carnet, -1, SQLT_INT);
@@ -54,7 +56,7 @@ require '../vendor/autoload.php';
 
         $row = oci_fetch_assoc($stmt);
 
-        
+
         if ($row === false) {
             echo "<script>
             Swal.fire({
@@ -68,15 +70,15 @@ require '../vendor/autoload.php';
             exit;
         }
 
-        
+
         if (password_verify($password, trim($row['PASSWORD']))) {
-            
+            $_SESSION['est_id']    = $row['ID_ESTUDIANTE'];
             $_SESSION['carnet']    = $row['CARNET'];
             $_SESSION['nombre']    = trim($row['NOMBRE_ESTUDIANTE']);
             $_SESSION['apellidos'] = trim($row['APELLIDOS_ESTUDIANTE']);
             $_SESSION['facultad']  = trim($row['FACULTAD_NOMBRE']);
 
-            
+
             header("Location: ../personal_views/panel_estudiante.php");
             exit;
         } else {
@@ -92,7 +94,7 @@ require '../vendor/autoload.php';
             exit;
         }
 
-        
+
         oci_free_statement($stmt);
         oci_close($conn);
     }

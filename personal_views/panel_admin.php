@@ -139,9 +139,6 @@ include '../conexion_db/conexionOracle.php';
                 <div class="col-md-6">
                     <input type="email" name="email" class="form-control" placeholder="Correo" required>
                 </div>
-                <div class="col-md-6">
-                    <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
-                </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-success">Registrar Profesor</button>
                 </div>

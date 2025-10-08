@@ -7,7 +7,7 @@
     <title>Login Administrador</title>
     <link rel="stylesheet" href="../css/login.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 </head>
@@ -30,8 +30,9 @@
 
 <body>
     <div class="contenedor-formularios">
-        <h2>Acceso Administrador</h2>
+        <h2>Inicio de Sesión</h2>
         <img src="../Imagenes/logo.png" alt="Logo" class="logo">
+
         <form id="formLogin" action="../modules/procesar_login_admin.php" method="POST">
             <div class="input-group">
                 <i class="fa-solid fa-user"></i>
@@ -41,9 +42,19 @@
                 <i class="fa-solid fa-lock"></i>
                 <input type="password" name="password" placeholder="Contraseña" required autocomplete="new-password">
             </div>
-            <button type="submit" name="login_admin">Ingresar</button>
+
+            <div class="input-group">
+                <label for="rol">Iniciar como:</label>
+                <select name="rol" required>
+                    <option value="admin">Administrador</option>
+                    <option value="profesor">Profesor</option>
+                </select>
+            </div>
+
+            <button type="submit" name="login">Ingresar</button>
         </form>
     </div>
+
 </body>
 <script>
     const togglePassword = document.getElementById('togglePassword');
