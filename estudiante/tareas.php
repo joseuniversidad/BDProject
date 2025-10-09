@@ -10,19 +10,26 @@ if (!isset($_SESSION['est_id'])) {
 
 $id_est = $_SESSION['est_id'];
 
-// 1️⃣ Consulta las tareas del estudiante con fecha formateada
+// Consulta las tareas del estudiante con fecha formateada y calificación si existe
 $sql = "
-    SELECT ID_TAREA, TITULO, TO_CHAR(FECHA_VENCE, 'DD/MM/YYYY') AS FECHA_VENCE, PONDERACION
-    FROM TAREAS
-    WHERE ID_ESTUDIANTE = :id
-    ORDER BY FECHA_VENCE
+    SELECT 
+        T.ID_TAREA, 
+        T.TITULO, 
+        TO_CHAR(T.FECHA_VENCE, 'DD/MM/YYYY') AS FECHA_VENCE, 
+        T.PONDERACION,
+        ET.CALIFICACION
+    FROM TAREAS T
+    LEFT JOIN ENTREGAS_TAREAS ET
+        ON T.ID_TAREA = ET.ID_TAREA AND ET.ID_ESTUDIANTE = :id
+    WHERE T.ID_ESTUDIANTE = :id
+    ORDER BY T.FECHA_VENCE
 ";
 
 $stmt = oci_parse($conn, $sql);
 oci_bind_by_name($stmt, ":id", $id_est);
 oci_execute($stmt);
 
-// 2️⃣ Verificar si hay tareas
+// Verificar si hay tareas
 $hayTareas = false;
 $primerFila = oci_fetch_assoc($stmt);
 if ($primerFila !== false) {
@@ -54,6 +61,7 @@ if ($primerFila !== false) {
                         <th>Fecha Límite</th>
                         <th>Ponderación</th>
                         <th>Acción</th>
+                        <th>Calificación</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,6 +69,7 @@ if ($primerFila !== false) {
                     // Mostrar la primera fila
                     $row = $primerFila;
                     do {
+                        $calificacion = $row['CALIFICACION'] !== null ? $row['CALIFICACION'] : "—";
                     ?>
                         <tr class="border-b hover:bg-gray-50">
                             <td class="p-2"><?php echo htmlspecialchars($row['TITULO']); ?></td>
@@ -69,6 +78,7 @@ if ($primerFila !== false) {
                             <td>
                                 <a href="subir_tarea.php?id_tarea=<?php echo $row['ID_TAREA']; ?>" class="text-blue-600 hover:underline">Subir</a>
                             </td>
+                            <td class="text-center font-semibold"><?php echo $calificacion; ?></td>
                         </tr>
                     <?php
                         $row = oci_fetch_assoc($stmt);
@@ -79,7 +89,6 @@ if ($primerFila !== false) {
         <?php endif; ?>
     </div>
 </body>
-
 
 </html>
 
