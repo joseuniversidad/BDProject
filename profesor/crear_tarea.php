@@ -1,41 +1,58 @@
 <?php
 session_start();
 if (!isset($_SESSION['prof_id'])) {
-    header("Location: ../principal_views/login_admin.php");
+    header("Location: ../principal_views/login.php");
     exit;
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Asignar Tarea</title>
+    <title>Crear Nueva Tarea</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100">
+    <div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded shadow">
+        <!-- Botón para regresar -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold">📘 Crear Nueva Tarea</h2>
+            <a href="../personal_views/panel_profesor.php"
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                ⬅️ Regresar
+            </a>
+        </div>
 
-<div class="max-w-3xl mx-auto mt-10 bg-white p-8 rounded shadow-lg">
-    <h2 class="text-2xl font-bold text-center mb-6">Asignar Nueva Tarea</h2>
-    
-    <form action="guardar_tarea.php" method="POST">
-        <label class="block mb-2 font-semibold">Título de la tarea:</label>
-        <input type="text" name="titulo" required class="w-full border p-2 rounded mb-4">
+        <form action="guardar_tarea.php" method="POST">
+            <div class="mb-4">
+                <label class="block font-semibold mb-1">Título:</label>
+                <input type="text" name="titulo" class="w-full border rounded p-2" required>
+            </div>
 
-        <label class="block mb-2 font-semibold">ID del Curso:</label>
-        <input type="number" name="id_curso" required class="w-full border p-2 rounded mb-4">
+            <div class="mb-4">
+                <label class="block font-semibold mb-1">Curso (ID):</label>
+                <input type="number" name="id_curso" class="w-full border rounded p-2" required>
+            </div>
 
-        <label class="block mb-2 font-semibold">Fecha de entrega:</label>
-        <input type="date" name="fecha_vencimiento" required class="w-full border p-2 rounded mb-4">
+            <div class="mb-4">
+                <label class="block font-semibold mb-1">Fecha de vencimiento:</label>
+                <input type="date" name="fecha_vencimiento" class="w-full border rounded p-2" required>
+            </div>
 
-        <label class="block mb-2 font-semibold">Ponderación (%):</label>
-        <input type="number" step="0.01" name="ponderacion" required class="w-full border p-2 rounded mb-4">
+            <div class="mb-4">
+                <label class="block font-semibold mb-1">Ponderación (%):</label>
+                <input type="number" step="0.01" name="ponderacion" class="w-full border rounded p-2" required>
+            </div>
 
-        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
-            Publicar Tarea
-        </button>
-    </form>
-</div>
-
+            <button type="submit"
+                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full transition">
+                Publicar Tarea
+            </button>
+        </form>
+    </div>
 </body>
+
 </html>
