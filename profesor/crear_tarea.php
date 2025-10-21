@@ -17,7 +17,6 @@ if (!isset($_SESSION['prof_id'])) {
 
 <body class="bg-gray-100">
     <div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded shadow">
-        <!-- Botón para regresar -->
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold">📘 Crear Nueva Tarea</h2>
             <a href="../personal_views/panel_profesor.php"

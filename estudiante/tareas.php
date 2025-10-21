@@ -2,7 +2,7 @@
 session_start();
 include '../conexion_db/conexionOracle.php';
 
-// Verificar sesión del estudiante
+
 if (!isset($_SESSION['est_id'])) {
     header("Location: ../principal_views/login.php");
     exit;
@@ -10,7 +10,6 @@ if (!isset($_SESSION['est_id'])) {
 
 $id_est = $_SESSION['est_id'];
 
-// Consulta las tareas del estudiante con fecha formateada y calificación si existe
 $sql = "
     SELECT 
         T.ID_TAREA, 
@@ -45,7 +44,9 @@ if ($primerFila !== false) {
     <meta charset="UTF-8">
     <title>Mis Tareas</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/panel.css">
 </head>
+<?php include '../dashboard/navbar.php'; ?>
 
 <body class="bg-gray-100">
     <div class="max-w-4xl mx-auto mt-10 bg-white p-6 rounded shadow">
@@ -66,7 +67,7 @@ if ($primerFila !== false) {
                 </thead>
                 <tbody>
                     <?php
-                    // Mostrar la primera fila
+                    
                     $row = $primerFila;
                     do {
                         $calificacion = $row['CALIFICACION'] !== null ? $row['CALIFICACION'] : "—";

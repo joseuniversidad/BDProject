@@ -14,7 +14,7 @@ if (!$id_tarea) {
     die("ID de tarea no especificado.");
 }
 
-// Manejo de subida
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
     $file = $_FILES['archivo'];
     $allowed = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'];
@@ -25,16 +25,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
     } elseif ($file['error'] !== 0) {
         $error = "Error al subir el archivo.";
     } else {
-        // Crear carpeta uploads si no existe
+      
         $uploadDir = '../uploads/';
         if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
 
-        // Nombre único
+
         $nombreArchivo = time() . "_$id_est." . $ext;
         $ruta = $uploadDir . $nombreArchivo;
 
         if (move_uploaded_file($file['tmp_name'], $ruta)) {
-            // Guardar en la tabla ENTREGAS_TAREAS
+
             $sql = "INSERT INTO ENTREGAS_TAREAS (ID_ENT, ID_TAREA, ID_ESTUDIANTE, FECHA_ENTREGA, RUTA_ARCHIVO) 
                     VALUES (ENTREGAS_SEQ.NEXTVAL, :id_tarea, :id_est, SYSDATE, :ruta)";
             $stmt = oci_parse($conn, $sql);

@@ -123,7 +123,6 @@ include '../conexion_db/conexionOracle.php';
             </div>
         </section>
 
-        <!-- Agregar Profesor -->
         <section class="mb-5">
             <h3 class="mb-3">Agregar Profesor</h3>
             <form action="../modules/agregar_profesor.php" method="POST" class="row g-3 bg-white p-4 shadow-sm rounded">
