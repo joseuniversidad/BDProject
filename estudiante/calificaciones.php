@@ -2,7 +2,7 @@
 session_start();
 include '../conexion_db/conexionOracle.php';
 
-// 🔒 Verificar sesión
+
 if (!isset($_SESSION['est_id'])) {
     header("Location: ../principal_views/login.php");
     exit;
@@ -13,7 +13,7 @@ if (!$id_estudiante) {
     die("Error: estudiante no identificado.");
 }
 
-// 🔹 Obtener calificaciones del estudiante
+
 $sql = "
     SELECT C.COD_CURSO, C.NOMBRE AS NOMBRE_CURSO, CF.NOTA_FINAL, CF.APROBADO
     FROM CALIFICACIONES_FINAL CF
@@ -42,7 +42,7 @@ oci_free_statement($stmt);
 </head>
 
 <body class="bg-gray-100 min-h-screen flex flex-col items-center p-8">
-    <!-- BOTÓN DE REGRESAR -->
+
     <div class="w-full max-w-6xl mb-6">
         <button onclick="history.back()" 
                 class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">

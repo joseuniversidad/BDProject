@@ -124,18 +124,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guardar_notas'])) {
 <div class="p-8 space-y-12">
     <!-- ====================== CURSOS ASIGNADOS ====================== -->
     <section>
-        <h2 class="text-2xl font-semibold mb-6 text-green-700">📚 Cursos Asignados</h2>
+        <h2 class="text-xl font-semibold mb-6">📚 Cursos Asignados</h2>
 
         <?php if (!empty($cursos)): ?>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             <?php foreach ($cursos as $curso): ?>
-                <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition duration-300 border-t-4 border-green-600">
-                    <div class="flex justify-between items-center mb-3">
-                        <h3 class="text-lg font-bold text-green-700">
-                            <?= htmlspecialchars($curso['COD_CURSO']) ?> - <?= htmlspecialchars($curso['NOMBRE']) ?>
-                        </h3>
-                    </div>
-                </div>
+            <div 
+                class="cursor-pointer bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:scale-105 transform transition duration-300"
+                onclick="crearTarea('<?= $curso['ID_CURSO'] ?>','<?= htmlspecialchars($curso['NOMBRE']) ?>')">
+                <h3 class="text-lg font-bold text-green-700 mb-2">
+                    <?= htmlspecialchars($curso['COD_CURSO']) ?>
+                </h3>
+                <p class="text-gray-700 text-base"><?= htmlspecialchars($curso['NOMBRE']) ?></p>
+            </div>
             <?php endforeach; ?>
         </div>
         <?php else: ?>
@@ -214,6 +215,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guardar_notas'])) {
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
+<script>
+        function crearTarea(idCurso, nombreCurso) {
+            Swal.fire({
+                title: '¿Crear tarea para ' + nombreCurso + '?',
+                text: 'Se abrirá el formulario para crear la tarea de este curso.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, crear tarea',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '../profesor/crear_tarea.php?id_curso=' + idCurso + '&nombre=' + encodeURIComponent(nombreCurso);
+                }
+            });
+        }
+    </script>
 </html>
 
 <?php
