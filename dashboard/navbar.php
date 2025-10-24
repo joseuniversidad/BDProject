@@ -43,7 +43,7 @@ $url_pensum = $pensums[$facultad_usuario] ?? "../pensum/general.php";
     <script src="../js/sidebar.js"></script>
     <nav class="sidebar" id="sidebar" aria-label="Menú principal">
         <div class="profile">
-            <a href="../principal_views/panel.php">
+            <a href="../personal_views/panel_estudiante.php">
                 <img src="../imagenes/logo.png" alt="avatar">
             </a>
             <div class="name">
@@ -51,8 +51,7 @@ $url_pensum = $pensums[$facultad_usuario] ?? "../pensum/general.php";
             </div>
         </div>
 
-        <a href="#"><span class="icon">🏠</span><span class="label">Tablero</span></a>
-        <a href="#"><span class="icon">📚</span><span class="label">Cursos</span></a>
+        <a href="../estudiante/cursos.php"><span class="icon">🏠</span><span class="label">Tablero</span></a>
         <a href="../estudiante/tareas.php"><span class="icon">📝</span><span class="label">Tareas</span></a>
         <a href="../estudiante/asignacion.php"><span class="icon">📋</span><span class="label">Asignación</span></a>
         <a href="<?php echo $url_pensum; ?>">

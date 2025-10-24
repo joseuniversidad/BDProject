@@ -47,105 +47,54 @@ $meses = [
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <title>Estado de Solvencia</title>
-     <link rel="stylesheet" href="../css/panel.css">
-    <style>
-        /* Contenedor principal */
-        .solvencia-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: #fefefe;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Título */
-        .solvencia-container h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #333;
-            margin-bottom: 30px;
-        }
-
-        /* Grid de tarjetas */
-        .saldo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        /* Tarjeta individual */
-        .saldo-card {
-            border-left: 6px solid;
-            padding: 20px;
-            border-radius: 12px;
-            background-color: #f9f9f9;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .saldo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-        }
-
-        /* Texto de estado */
-        .estado-solvente {
-            color: #16a34a;
-            /* verde */
-            font-weight: bold;
-        }
-
-        .estado-pendiente {
-            color: #dc2626;
-            /* rojo */
-            font-weight: bold;
-        }
-
-        /* Títulos dentro de tarjeta */
-        .saldo-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: #1f2937;
-        }
-
-        /* Detalles de pago */
-        .saldo-card p {
-            margin: 4px 0;
-            color: #374151;
-            font-size: 0.95rem;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/panel.css">
 </head>
 
-<body>
+<body class="bg-gray-100 min-h-screen flex">
     <?php include '../dashboard/navbar.php'; ?>
-    <div class="solvencia-container">
-        <h2>💰 Estado de Solvencia</h2>
-        <div class="saldo-grid">
-            <?php foreach ($meses as $mes):
-                $solvente = isset($pagos[$mes]);
-                $color_border = $solvente ? '#16a34a' : '#dc2626';
-                $estado = $solvente ? '✅ Solvente' : '❌ Pendiente';
-                $monto = $pagos[$mes]['monto'] ?? '-';
-                $ref = $pagos[$mes]['referencia'] ?? '-';
-                $fecha = isset($pagos[$mes]['fecha']) ? date("d-m-Y", strtotime($pagos[$mes]['fecha'])) : '-';
-            ?>
-                <div class="saldo-card" style="border-left-color: <?php echo $color_border; ?>;">
-                    <h3><?php echo $mes; ?></h3>
-                    <p>Estado: <span class="<?php echo $solvente ? 'estado-solvente' : 'estado-pendiente'; ?>"><?php echo $estado; ?></span></p>
-                    <p>Monto: Q <?php echo $monto; ?></p>
-                    <p>Referencia: <?php echo $ref; ?></p>
-                    <p>Fecha: <?php echo $fecha; ?></p>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
 
+    <!-- Contenido principal -->
+    <main class="flex-1 ml-64 pt-24 px-6"> 
+        <!-- ml-64 deja espacio al sidebar -->
+
+        <section class="bg-white shadow-xl rounded-2xl p-8 max-w-6xl mx-auto">
+            <h2 class="text-center text-3xl font-bold text-blue-600 mb-8 flex items-center justify-center gap-2">
+                💰 Estado de Solvencia
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <?php foreach ($meses as $mes):
+                    $solvente = isset($pagos[$mes]);
+                    $color_border = $solvente ? 'border-green-500' : 'border-red-500';
+                    $estado = $solvente ? '✅ Solvente' : '❌ Pendiente';
+                    $monto = $pagos[$mes]['monto'] ?? '-';
+                    $ref = $pagos[$mes]['referencia'] ?? '-';
+                    $fecha = isset($pagos[$mes]['fecha']) ? date("d-m-Y", strtotime($pagos[$mes]['fecha'])) : '-';
+                ?>
+                    <div class="border-l-4 <?php echo $color_border; ?> bg-gray-50 rounded-xl shadow-sm p-5 hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2"><?php echo $mes; ?></h3>
+                        <p class="text-sm text-gray-700 mb-1">
+                            Estado:
+                            <span class="<?php echo $solvente ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'; ?>">
+                                <?php echo $estado; ?>
+                            </span>
+                        </p>
+                        <p class="text-sm text-gray-700 mb-1">Monto: <span class="font-medium">Q <?php echo $monto; ?></span></p>
+                        <p class="text-sm text-gray-700 mb-1">Referencia: <span class="font-medium"><?php echo $ref; ?></span></p>
+                        <p class="text-sm text-gray-700">Fecha: <span class="font-medium"><?php echo $fecha; ?></span></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/botonlogoutconfirm.js"></script>
+    <script src="../js/sidebar.js"></script>
 </body>
-
 </html>

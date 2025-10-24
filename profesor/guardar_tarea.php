@@ -6,7 +6,7 @@ require '../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Verificar sesión del profesor
+// 🔒 Verificar sesión
 if (!isset($_SESSION['prof_id'])) {
     header("Location: ../principal_views/login.php");
     exit;
@@ -20,11 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_prof = $_SESSION['prof_id'];
 
     try {
-        // ✅ 1. Insertar tarea para todos los estudiantes de la misma facultad del profesor
-        $sql = "INSERT INTO TAREAS (ID_TAREA, ID_ESTUDIANTE, ID_PROF, ID_CURSO, TITULO, FECHA_PUBLICADO, FECHA_VENCE, PONDERACION)
-                SELECT TAREAS_SEQ.NEXTVAL, e.ID_ESTUDIANTE, :prof, :curso, :titulo, SYSDATE, TO_DATE(:vence, 'YYYY-MM-DD'), :pond
+        // ✅ 1. Insertar tarea para todos los estudiantes de la facultad del profesor
+        $sql = "INSERT INTO TAREAS (
+                    ID_TAREA, ID_ESTUDIANTE, ID_PROF, ID_CURSO, TITULO, 
+                    FECHA_PUBLICADO, FECHA_VENCE, PONDERACION
+                )
+                SELECT 
+                    TAREAS_SEQ.NEXTVAL, e.ID_ESTUDIANTE, :prof, :curso, :titulo, 
+                    SYSDATE, TO_DATE(:vence, 'YYYY-MM-DD'), :pond
                 FROM ESTUDIANTES e
-                WHERE e.FACULTAD = (SELECT ID_FACULTAD FROM PROFESORES WHERE ID_PROF = :prof)";
+                WHERE e.FACULTAD = (
+                    SELECT ID_FACULTAD FROM PROFESORES WHERE ID_PROF = :prof
+                )";
 
         $stmt = oci_parse($conn, $sql);
         oci_bind_by_name($stmt, ":prof", $id_prof);
@@ -40,42 +47,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // ✅ 2. Obtener los correos de los estudiantes de esa facultad
         $query = "SELECT EMAIL FROM ESTUDIANTES 
-                  WHERE FACULTAD = (SELECT ID_FACULTAD FROM PROFESORES WHERE ID_PROF = :prof)";
+                  WHERE FACULTAD = (
+                      SELECT ID_FACULTAD FROM PROFESORES WHERE ID_PROF = :prof
+                  )";
         $st = oci_parse($conn, $query);
         oci_bind_by_name($st, ":prof", $id_prof);
         oci_execute($st);
 
-        // ✅ 3. Configurar PHPMailer
+        // ✅ 3. Configurar PHPMailer (solo una instancia y agregar todos los correos)
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'JrCayetano77@gmail.com'; // Tu correo
+        $mail->Password = 'vuqjuilnyhwtgdfs'; // Contraseña de aplicación Gmail
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+        $mail->CharSet = 'UTF-8';
+        $mail->setFrom('JrCayetano77@gmail.com', 'Sistema Universitario');
+        $mail->isHTML(true);
+        $mail->Subject = "Nueva tarea publicada: $titulo";
+        $mail->Body = "
+            <h3>📘 Se ha asignado una nueva tarea</h3>
+            <p><b>Título:</b> $titulo</p>
+            <p><b>Fecha límite:</b> $fecha_vencimiento</p>
+            <p><b>Ponderación:</b> $ponderacion%</p>
+            <p>Por favor revisa la plataforma para más detalles.</p>
+        ";
+
         while ($row = oci_fetch_assoc($st)) {
-            $mail = new PHPMailer(true);
-            try {
-                $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
-                $mail->SMTPAuth = true;
-                $mail->Username = 'JrCayetano77@gmail.com';  // tu correo
-                $mail->Password = 'vuqjuilnyhwtgdfs';       // tu contraseña de aplicación Gmail
-                $mail->SMTPSecure = 'tls';
-                $mail->Port = 587;
-                $mail->CharSet = 'UTF-8';
-                $mail->setFrom('JrCayetano77@gmail.com', 'Sistema Universitario');
-                $mail->addAddress($row['EMAIL']);
-                $mail->isHTML(true);
-                $mail->Subject = "Nueva tarea publicada: $titulo";
-                $mail->Body = "
-                    <h3>Se ha asignado una nueva tarea</h3>
-                    <p><b>Título:</b> $titulo</p>
-                    <p><b>Fecha límite:</b> $fecha_vencimiento</p>
-                    <p><b>Ponderación:</b> $ponderacion%</p>
-                ";
-                $mail->send();
-            } catch (Exception $e) {
-                // No detenemos el flujo si un correo falla
-                error_log("❌ Error enviando correo a {$row['EMAIL']}: {$mail->ErrorInfo}");
-            }
+            $mail->addBCC($row['EMAIL']); // Usar BCC para enviar a muchos sin revelar correos
         }
 
-        echo "<script>alert('✅ Tarea publicada y notificaciones enviadas correctamente'); window.location.href='crear_tarea.php';</script>";
+        // Enviar correo (si hay estudiantes)
+        if ($mail->getToAddresses() || $mail->getBCCAddresses()) {
+            $mail->send();
+        }
+
+        // ✅ Mostrar mensaje con SweetAlert
+        echo "
+        <html>
+        <head>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Tarea publicada',
+                text: 'La tarea fue creada y las notificaciones fueron enviadas correctamente.',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                window.location.href = '../personal_views/panel_profesor.php';
+            });
+        </script>
+        </body>
+        </html>";
+        exit;
+
     } catch (Exception $ex) {
-        echo "<script>alert('❌ Error al publicar tarea: " . addslashes($ex->getMessage()) . "'); window.history.back();</script>";
+        // ❌ Error general
+        echo "
+        <html>
+        <head>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al publicar tarea',
+                html: 'Ocurrió un error: <br><b>" . addslashes($ex->getMessage()) . "</b>',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Intentar nuevamente'
+            }).then(() => {
+                window.history.back();
+            });
+        </script>
+        </body>
+        </html>";
+        exit;
     }
 }
+?>

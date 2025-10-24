@@ -123,29 +123,47 @@ include '../conexion_db/conexionOracle.php';
             </div>
         </section>
 
-        <section class="mb-5">
-            <h3 class="mb-3">Agregar Profesor</h3>
-            <form action="../modules/agregar_profesor.php" method="POST" class="row g-3 bg-white p-4 shadow-sm rounded">
-                <div class="col-md-6">
-                    <input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
-                </div>
-                <div class="col-md-6">
-                    <input type="text" name="apellidos" class="form-control" placeholder="Apellidos" required>
-                </div>
-                <div class="col-md-6">
-                    <input type="number" name="id_facultad" class="form-control" placeholder="ID Facultad" required>
-                </div>
-                <div class="col-md-6">
-                    <input type="email" name="email" class="form-control" placeholder="Correo" required>
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-success">Registrar Profesor</button>
-                </div>
-                <a href="../principal_views/registro_estudiante.php" class="signup">Registrar Estudiante <i class="fa-solid fa-user-plus"></i></a>
+       <section class="mb-5">
+    <h3 class="mb-3">Agregar Profesor</h3>
+    <form action="../modules/agregar_profesor.php" method="POST" class="row g-3 bg-white p-4 shadow-sm rounded">
+        <div class="col-md-6">
+            <input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
+        </div>
+        <div class="col-md-6">
+            <input type="text" name="apellidos" class="form-control" placeholder="Apellidos" required>
+        </div>
+        <div class="col-md-6">
+            <input type="number" name="id_facultad" class="form-control" placeholder="ID Facultad" required>
+        </div>
+        <div class="col-md-6">
+            <input type="email" name="email" class="form-control" placeholder="Correo" required>
+        </div>
 
+        <!-- NUEVO: Seleccionar curso -->
+        <div class="col-md-12">
+            <label for="curso" class="form-label fw-bold">Asignar Curso</label>
+            <select name="id_curso" id="curso" class="form-select" required>
+                <option value="">Seleccione un curso...</option>
+                <?php
+                $sqlCursos = "SELECT ID_CURSO, NOMBRE FROM CURSOS ORDER BY NOMBRE";
+                $stmtCursos = oci_parse($conn, $sqlCursos);
+                oci_execute($stmtCursos);
+                while ($curso = oci_fetch_assoc($stmtCursos)) {
+                    echo "<option value='{$curso['ID_CURSO']}'>" . htmlspecialchars($curso['NOMBRE']) . "</option>";
+                }
+                ?>
+            </select>
+        </div>
 
-            </form>
-        </section>
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">Registrar Profesor</button>
+        </div>
+
+        <a href="../principal_views/registro_estudiante.php" class="signup">
+            Registrar Estudiante <i class="fa-solid fa-user-plus"></i>
+        </a>
+    </form>
+</section>
 
     </div>
 

@@ -46,7 +46,7 @@
             <button type="submit" name="login">Ingresar</button>
         </form>
         <div class="acciones">
-            <a href="#" class="forgot">Recuperar Contraseña</a>
+            <a href="../modules/recuperar_contrasenia.php" class="forgot">Recuperar Contraseña</a>
             <a href="registro_estudiante.php" class="signup">Registrarse <i class="fa-solid fa-user-plus"></i></a>
         </div>
     </div>
